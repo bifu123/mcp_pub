@@ -1,11 +1,16 @@
+# MCP从入门到放弃
+
 对于更多人的来说，快速跑通一个最简单的DEMO是更为普遍的需求， 而MCP的官方项目（https://github.com/modelcontextprotocol/python-sdk）说明绕了半天，调试并不顺利，并不利于快速体验上手。基于本人需求，选取了mcp中服务端和客户端使用http传输的方式，纯python代码，其它的不做探究。以下是整理后的操练教程：
 
-## 1. 安装 mcp
+## 1. 项目源码
+https://github.com/bifu123/mcp_pub
+
+## 2. 安装 mcp
 ```bash
 pip install mcp
 ```
 
-## 2. 编写 mcp server
+## 3. 编写 mcp server
 ```python
 # server.py
 
@@ -25,7 +30,7 @@ if __name__ == "__main__":
     mcp.run(transport="streamable-http")
 ```
 
-## 3. 运行服务端
+## 4. 运行服务端
 python server.py # 直接运行
 ```
 输出：
@@ -51,7 +56,7 @@ mcp dev server.py --with pandas --with numpy # 加载科学计算
 mcp dev server.py --with-editable . # 挂载本地编辑器
 ```
 
-### 3.1 不同状态的服务端
+### 4.1 不同状态的服务端
 ```python
 from mcp.server.fastmcp import FastMCP
 
@@ -70,7 +75,7 @@ mcp.run(transport="streamable-http")
 # transport="streamable-http" 使用流式输出
 ```
 
-### 3.2 同时运行多个服务器
+### 4.2 同时运行多个服务器
 ```python
 # echo.py
 from mcp.server.fastmcp import FastMCP
@@ -125,7 +130,7 @@ if __name__ == "__main__":
 python main.py
 
 
-## 4. 客户端
+## 5. 客户端
 ```python
 # client.py
 
@@ -165,7 +170,7 @@ python client.py
 (mcp) E:\Project\mcp>python client.py
 当前时间： 2025-05-23T12:36:24.869402
 
-## 5. 增加服务端工具
+## 6. 增加服务端工具
 ```python
 # server.py
 from mcp.server.fastmcp import FastMCP
@@ -237,12 +242,12 @@ if __name__ == "__main__":
 - resources: []
 
 
-## 6. 关于服务端资源
+## 7. 关于服务端资源
 MCP的资源是不成熟的，所有定义的资源必须封装成工具让客户端去发现调用。可能它只是一种思想，即需要运算后得到结果的内容叫工具，而不需要或很少需要运算逻辑而得到的静态内容叫资源。但目前它支持非常不够好，我们还是略过吧。
 
 
-## 7. 让大模型根据用户问题自主调用工具
-### 7.1 支持 function call 的模型
+## 8. 让大模型根据用户问题自主调用工具
+### 8.1 支持 function call 的模型
 ```python
 # clinet_llm.py
 '''
@@ -301,7 +306,7 @@ if __name__ == "__main__":
 
 ```
 
-### 7.2 不支持 function call 的模型
+### 8.2 不支持 function call 的模型
 ```python
 '''
 如果不想动服务端，则可以修改客户端以使用langchain的agent tool：
@@ -374,7 +379,7 @@ if __name__ == "__main__":
 ```
 
 
-## 8. 使用 http 来实现
+## 9. 使用 http 来实现
 ```python
 # server_http.py
 
@@ -590,7 +595,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## 9. 使用 langchain 实现
+## 10. 使用 langchain 实现
 ```python
 # server_langchain.py
 
@@ -906,7 +911,7 @@ if __name__ == "__main__":
 
 ```
 
-## 10. 结论
+## 11. 结论
 MCP目前的工具调用模型和 LangChain 的区别
 - MCP的设计是：
 大语言模型基于工具列表做一次决策，选择调用哪个工具（一次调用一个工具）。
@@ -923,7 +928,7 @@ MCP目前的工具调用模型和 LangChain 的区别
 langchain仍然是大模型应用的巅峰。MCP值得肯定的一点：它提出了将工具作为服务，提高了共享和利用率，并提出一个标准接口，但是它对于多步任务拆解等复杂任务力不从心，资源也仅是给出理念而己，本质还是工具。它的完善或许需要时日。
 
 
-## 11. 交流
+## 12. 交流
 QQ群：222302526
 
 
